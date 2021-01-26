@@ -198,3 +198,39 @@ function isMatch($s, $p)
 {
     return preg_match("/^" . $p . "$/", $s);
 }
+
+/**
+ * #11 - Container With Most Water
+ * @param Integer[] $height
+ * @return Integer
+ */
+function maxArea($height) {
+    $max = 0;
+    $x = 0;
+    $i = count($height)-1;
+    while($x < $i) {
+        $area = min($height[$x], $height[$i]) * ($i - $x);    
+        if ($area > $max){
+            $max = $area;
+        }
+        if ($height[$x] <= $height[$i]) {
+            $x++;
+        } else {
+            $i--;
+        }
+    }
+    return $max;
+}
+// Brute force solution exceeds time limit
+// function maxArea($height) {
+//     $max = 0;
+//     for ($x = 0; $x < count($height); $x++) {
+//         for ($i = count($height) - 1; $i > $x; $i--) {
+//             $area = min($height[$x], $height[$i]) * ($i - $x);
+//             if ($area > $max){
+//                 $max = $area;
+//             }
+//         }
+//     }
+//     return $max;
+// }
