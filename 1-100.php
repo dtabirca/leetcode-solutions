@@ -204,13 +204,14 @@ function isMatch($s, $p)
  * @param Integer[] $height
  * @return Integer
  */
-function maxArea($height) {
+function maxArea($height)
+{
     $max = 0;
     $x = 0;
-    $i = count($height)-1;
-    while($x < $i) {
-        $area = min($height[$x], $height[$i]) * ($i - $x);    
-        if ($area > $max){
+    $i = count($height) - 1;
+    while ($x < $i) {
+        $area = min($height[$x], $height[$i]) * ($i - $x);
+        if ($area > $max) {
             $max = $area;
         }
         if ($height[$x] <= $height[$i]) {
@@ -234,3 +235,117 @@ function maxArea($height) {
 //     }
 //     return $max;
 // }
+
+/**
+ * #12 - Integer to Roman
+ * @param Integer $num
+ * @return String
+ */
+function intToRoman($num)
+{
+    $roman = '';
+    if ($num / 1000 >= 1) {
+        $roman .= str_repeat('M', floor($num / 1000));
+        $num = $num % 1000;
+    }
+    if ($num >= 100) {
+        $hundreds = floor($num / 100);
+        if ($hundreds <= 3) {
+            $roman .= str_repeat('C', $hundreds);
+        } else if ($hundreds == 4) {
+            $roman .= 'CD';
+        } else if ($hundreds >= 5 && $hundreds <= 8) {
+            $roman .= 'D' . str_repeat('C', $hundreds - 5);
+        } else {
+            $roman .= 'CM';
+        }
+        $num = $num % 100;
+    }
+    if ($num >= 10) {
+        $dozens = floor($num / 10);
+        if ($dozens <= 3) {
+            $roman .= str_repeat('X', $dozens);
+        } else if ($dozens == 4) {
+            $roman .= 'XL';
+        } else if ($dozens >= 5 && $dozens <= 8) {
+            $roman .= 'L' . str_repeat('X', $dozens - 5);
+        } else {
+            $roman .= 'XC';
+        }
+        $num = $num % 10;
+    }
+    if ($num > 0) {
+        if ($num <= 3) {
+            $roman .= str_repeat('I', $num);
+        } else if ($num == 4) {
+            $roman .= 'IV';
+        } else if ($num >= 5 && $num <= 8) {
+            $roman .= 'V' . str_repeat('I', $num - 5);
+        } else {
+            $roman .= 'IX';
+        }
+    }
+    return $roman;
+}
+
+/**
+ * #13 - Roman to Integer
+ * @param String $s
+ * @return Integer
+ */
+function romanToInt($s)
+{
+    $int = 0;
+    while (strlen($s) > 0) {
+        $letter = $s[0];
+        $s = substr($s, 1);
+        switch ($letter) {
+            case 'M':
+                $int += 1000;
+                break;
+            case 'D':
+                $int += 500;
+                break;
+            case 'C':
+                if ($s[0] == 'D') {
+                    $int += 400;
+                    $s = substr($s, 1);
+                } else if ($s[0] == 'M') {
+                    $int += 900;
+                    $s = substr($s, 1);
+                } else {
+                    $int += 100;
+                }
+                break;
+            case 'L':
+                $int += 50;
+                break;
+            case 'X':
+                if (isset($s[0]) && $s[0] == 'L') {
+                    $int += 40;
+                    $s = substr($s, 1);
+                } else if (isset($s[0]) && $s[0] == 'C') {
+                    $int += 90;
+                    $s = substr($s, 1);
+                } else {
+                    $int += 10;
+                }
+                break;
+            case 'V':
+                $int += 5;
+                break;
+            case 'I':
+                if (isset($s[0]) && $s[0] == 'V') {
+                    $int += 4;
+                    $s = substr($s, 1);
+                } else if (isset($s[0]) && $s[0] == 'X') {
+                    $int += 9;
+                    $s = substr($s, 1);
+                } else {
+                    $int += 1;
+                }
+                break;
+        }
+    }
+    return $int;
+}
