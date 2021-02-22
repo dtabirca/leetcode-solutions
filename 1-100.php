@@ -349,3 +349,94 @@ function romanToInt($s)
     }
     return $int;
 }
+
+/**
+ * 14 - Longest Common Prefix
+ * @param String[] $strs
+ * @return String
+ */
+function longestCommonPrefix($strs)
+{
+    $shortest = min(array_map('strlen', $strs));
+    while ($shortest > 0) {
+        $found = true;
+        if ($prefix = substr($strs[0], 0, $shortest)) {
+            foreach ($strs as $s) {
+                if (substr($s, 0, $shortest) !== $prefix) {
+                    $found = false;
+                    $shortest--;
+                    break;
+                }
+            }
+            if ($found) {
+                return $prefix;
+            }
+        }
+    }
+    return "";
+}
+
+/**
+ * #15 - 3Sum
+ *
+ * Brute force solution exceeds time limit
+ *  
+ * @param Integer[] $nums
+ * @return Integer[][]
+ */
+function threeSum($nums) {
+    $matches = [];
+    for ($i = count($nums)-1; $i >= 0; $i--) {
+        for ($j = $i-1; $j >= 0; $j--) {
+            $need = -($nums[$i] + $nums[$j]);
+            $three = array_keys($nums, $need);
+            foreach ($three as $k) {
+                if ($j != $k && $i != $k) {
+                    $match = [$nums[$i], $nums[$j], $need];
+                    sort($match);
+                    if (!in_array($match, $matches)) {
+                        $matches[] = $match;
+                    }
+                }
+            }
+        }
+    }
+    return $matches;
+}
+
+/**
+ * #17 - Letter Combinations of a Phone Number
+ * 
+ * @param String $digits
+ * @return String[]
+ */
+function letterCombinations($digits) {
+        
+        $letters = [
+            2 => ['a', 'b', 'c'],
+            3 => ['d', 'e', 'f'],
+            4 => ['g', 'h', 'i'],
+            5 => ['j', 'k', 'l'],
+            6 => ['m', 'n', 'o'],
+            7 => ['p', 'q', 'r', 's'],
+            8 => ['t', 'u', 'v'],
+            9 => ['w', 'x', 'y', 'z'],
+        ];
+
+        $digits = str_split($digits);
+        $combinations = [];
+        foreach ($digits as $k => $x) {
+            $inter = [];
+            foreach ($letters[(int)$x] as $y) {
+                if ($k === 0) {
+                    $inter[] = $y;
+                } else {
+                    foreach ($combinations as $c){
+                        $inter[] = $c . $y;
+                    }
+                }
+            }
+            $combinations = $inter;
+        }
+        return $combinations;
+}
