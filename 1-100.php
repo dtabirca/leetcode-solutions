@@ -384,7 +384,8 @@ function longestCommonPrefix($strs)
  * @param Integer[] $nums
  * @return Integer[][]
  */
-function threeSum($nums) {
+function threeSum($nums)
+{
     $matches = [];
     for ($i = count($nums)-1; $i >= 0; $i--) {
         for ($j = $i-1; $j >= 0; $j--) {
@@ -410,7 +411,8 @@ function threeSum($nums) {
  * @param String $digits
  * @return String[]
  */
-function letterCombinations($digits) {
+function letterCombinations($digits)
+{
         
         $letters = [
             2 => ['a', 'b', 'c'],
@@ -439,4 +441,31 @@ function letterCombinations($digits) {
             $combinations = $inter;
         }
         return $combinations;
+}
+
+/**
+ * #19 - Remove Nth Node From End of List
+ * 
+ * @param ListNode $head
+ * @param Integer $n
+ * @return ListNode
+ */
+
+
+/**
+ * 20. Valid Parentheses
+ * 
+ * @param String $s
+ * @return Boolean
+ */
+function isValid($s)
+{
+    while (strlen($s) > 0) {
+        $s2 = str_replace(array('{}','[]','()'), '', $s);
+        if ($s2 == $s) {
+            return false;
+        }
+        $s = $s2;
+    }
+    return true;
 }
