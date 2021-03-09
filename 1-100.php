@@ -469,3 +469,163 @@ function isValid($s)
     }
     return true;
 }
+
+/**
+ * 22. Generate Parentheses
+ * 
+ * @param Integer $n
+ * @return String[]
+ */
+function generateParenthesis($n)
+{   
+    $count = $n * 2;
+    $count--;
+    $paranthesis = ['('];
+    while ($count > 0) {
+        $newParanthesis = [];
+        foreach ($paranthesis as $p) {
+            $totalopen = substr_count($p, '(');
+            $areopen = $totalopen - substr_count($p, ')');
+            if ($areopen > 0) {
+                $newParanthesis[] = $p . ')';
+            }
+            if ($totalopen < $n) {
+                $newParanthesis[] = $p . '(';
+            }
+        }
+        $count--;
+        $paranthesis = $newParanthesis;
+    }
+    return $paranthesis;
+}
+
+/**
+ * 26. Remove Duplicates from Sorted Array
+ * 
+ * @param Integer[] $nums
+ * @return Integer
+ */
+function removeDuplicates(&$nums)
+{
+    $remove = true;
+    while ($remove) {
+        $remove = false;
+        for ($i = 0; $i < count($nums) - 1; $i++) {
+            if ($nums[$i] === $nums[$i+1]) {
+                array_splice($nums, $i, 1);
+                $remove = true;
+                break;
+            }
+        }
+    }
+    return count($nums);
+}
+
+/**
+ * 27. Remove Element
+ * 
+ * @param Integer[] $nums
+ * @param Integer $val
+ * @return Integer
+ */
+function removeElement(&$nums, $val)
+{
+    $go = true;
+    while($go) {
+        $go = false;
+        for ($i = 0; $i < count($nums); $i++) {
+            if ($nums[$i] == $val) {
+                array_splice($nums, $i, 1);
+                $go = true;
+                break;
+            }
+        }
+    }
+    return count($nums);
+}
+
+/**
+ * 28. Implement strStr()
+ * 
+ * @param String $haystack
+ * @param String $needle
+ * @return Integer
+ */
+function strStrFunction($haystack, $needle)
+{
+    if ($needle == "") {
+        return 0;
+    }
+    $strpos = strpos($haystack, $needle);
+    if ($strpos !== FALSE) {
+        return $strpos;
+    }
+    return -1;
+}
+
+/**
+ * 29. Divide Two Integers
+ *      
+ * @param Integer $dividend
+ * @param Integer $divisor
+ * @return Integer
+ */
+function divide($dividend, $divisor)
+{
+    $quotient = 0;
+    $sign = (($dividend < 0 && $divisor > 0) || ($dividend > 0 && $divisor < 0)) ? -1 : 1;
+    $dividend = abs($dividend);
+    $divisor = abs($divisor);
+    while ($dividend >= $divisor) {
+        if ($dividend >= $divisor * 1000000000) {
+            $dividend -= $divisor * 1000000000;    
+            $quotient += 1000000000;
+        } else if ($dividend >= $divisor * 1000000) {
+            $dividend -= $divisor * 1000000;    
+            $quotient += 1000000;
+        } else if ($dividend >= $divisor * 1000) {
+            $dividend -= $divisor * 1000;    
+            $quotient += 1000;
+        } else {
+            $dividend -= $divisor;
+            $quotient++;
+        }
+    }
+    $quotient = $sign * $quotient;
+    return ($quotient > 2147483647) ? 2147483647 : $quotient;
+}
+
+/**
+ * 30. Substring with Concatenation of All Words
+ * 
+ * @param String $s
+ * @param String[] $words
+ * @return Integer[]
+ */
+function findSubstring($s, $words)
+{
+    $output = [];
+    $wordlength = strlen($words[0]);
+    $concatlength = count($words) * $wordlength;
+
+    for ($i = 0; $i < strlen($s); $i++) {
+        $substr = substr($s, $i);
+        if (strlen($substr) >= $concatlength) {
+            $local = $words;
+            $j = $i;
+            $key = array_search(substr($s, $j, $wordlength), $local);
+            while ($key !== false) {
+                unset ($local[$key]);
+                $j = $j + $wordlength;
+                $key = array_search(substr($s, $j, $wordlength), $local);
+            }
+            if ($j == $concatlength + $i) {
+                $output[] = $i;
+            }
+        } else {
+            break;
+        }
+    }
+
+    return $output;
+}
