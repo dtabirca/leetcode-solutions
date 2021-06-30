@@ -380,15 +380,16 @@ function longestCommonPrefix($strs)
  * #15 - 3Sum
  *
  * Brute force solution exceeds time limit
- *  
+
+ *
  * @param Integer[] $nums
  * @return Integer[][]
  */
 function threeSum($nums)
 {
     $matches = [];
-    for ($i = count($nums)-1; $i >= 0; $i--) {
-        for ($j = $i-1; $j >= 0; $j--) {
+    for ($i = count($nums) - 1; $i >= 0; $i--) {
+        for ($j = $i - 1; $j >= 0; $j--) {
             $need = -($nums[$i] + $nums[$j]);
             $three = array_keys($nums, $need);
             foreach ($three as $k) {
@@ -407,45 +408,45 @@ function threeSum($nums)
 
 /**
  * #17 - Letter Combinations of a Phone Number
- * 
+ *
  * @param String $digits
  * @return String[]
  */
 function letterCombinations($digits)
 {
-        
-        $letters = [
-            2 => ['a', 'b', 'c'],
-            3 => ['d', 'e', 'f'],
-            4 => ['g', 'h', 'i'],
-            5 => ['j', 'k', 'l'],
-            6 => ['m', 'n', 'o'],
-            7 => ['p', 'q', 'r', 's'],
-            8 => ['t', 'u', 'v'],
-            9 => ['w', 'x', 'y', 'z'],
-        ];
 
-        $digits = str_split($digits);
-        $combinations = [];
-        foreach ($digits as $k => $x) {
-            $inter = [];
-            foreach ($letters[(int)$x] as $y) {
-                if ($k === 0) {
-                    $inter[] = $y;
-                } else {
-                    foreach ($combinations as $c){
-                        $inter[] = $c . $y;
-                    }
+    $letters = [
+        2 => ['a', 'b', 'c'],
+        3 => ['d', 'e', 'f'],
+        4 => ['g', 'h', 'i'],
+        5 => ['j', 'k', 'l'],
+        6 => ['m', 'n', 'o'],
+        7 => ['p', 'q', 'r', 's'],
+        8 => ['t', 'u', 'v'],
+        9 => ['w', 'x', 'y', 'z'],
+    ];
+
+    $digits = str_split($digits);
+    $combinations = [];
+    foreach ($digits as $k => $x) {
+        $inter = [];
+        foreach ($letters[(int)$x] as $y) {
+            if ($k === 0) {
+                $inter[] = $y;
+            } else {
+                foreach ($combinations as $c) {
+                    $inter[] = $c . $y;
                 }
             }
-            $combinations = $inter;
         }
-        return $combinations;
+        $combinations = $inter;
+    }
+    return $combinations;
 }
 
 /**
  * #19 - Remove Nth Node From End of List
- * 
+ *
  * @param ListNode $head
  * @param Integer $n
  * @return ListNode
@@ -454,7 +455,7 @@ function letterCombinations($digits)
 
 /**
  * 20. Valid Parentheses
- * 
+ *
  * @param String $s
  * @return Boolean
  */
@@ -472,12 +473,12 @@ function isValid($s)
 
 /**
  * 22. Generate Parentheses
- * 
+ *
  * @param Integer $n
  * @return String[]
  */
 function generateParenthesis($n)
-{   
+{
     $count = $n * 2;
     $count--;
     $paranthesis = ['('];
@@ -501,7 +502,7 @@ function generateParenthesis($n)
 
 /**
  * 26. Remove Duplicates from Sorted Array
- * 
+ *
  * @param Integer[] $nums
  * @return Integer
  */
@@ -511,7 +512,7 @@ function removeDuplicates(&$nums)
     while ($remove) {
         $remove = false;
         for ($i = 0; $i < count($nums) - 1; $i++) {
-            if ($nums[$i] === $nums[$i+1]) {
+            if ($nums[$i] === $nums[$i + 1]) {
                 array_splice($nums, $i, 1);
                 $remove = true;
                 break;
@@ -523,7 +524,7 @@ function removeDuplicates(&$nums)
 
 /**
  * 27. Remove Element
- * 
+ *
  * @param Integer[] $nums
  * @param Integer $val
  * @return Integer
@@ -531,7 +532,7 @@ function removeDuplicates(&$nums)
 function removeElement(&$nums, $val)
 {
     $go = true;
-    while($go) {
+    while ($go) {
         $go = false;
         for ($i = 0; $i < count($nums); $i++) {
             if ($nums[$i] == $val) {
@@ -546,7 +547,7 @@ function removeElement(&$nums, $val)
 
 /**
  * 28. Implement strStr()
- * 
+ *
  * @param String $haystack
  * @param String $needle
  * @return Integer
@@ -557,7 +558,7 @@ function strStrFunction($haystack, $needle)
         return 0;
     }
     $strpos = strpos($haystack, $needle);
-    if ($strpos !== FALSE) {
+    if ($strpos !== false) {
         return $strpos;
     }
     return -1;
@@ -565,7 +566,7 @@ function strStrFunction($haystack, $needle)
 
 /**
  * 29. Divide Two Integers
- *      
+ *
  * @param Integer $dividend
  * @param Integer $divisor
  * @return Integer
@@ -578,13 +579,13 @@ function divide($dividend, $divisor)
     $divisor = abs($divisor);
     while ($dividend >= $divisor) {
         if ($dividend >= $divisor * 1000000000) {
-            $dividend -= $divisor * 1000000000;    
+            $dividend -= $divisor * 1000000000;
             $quotient += 1000000000;
         } else if ($dividend >= $divisor * 1000000) {
-            $dividend -= $divisor * 1000000;    
+            $dividend -= $divisor * 1000000;
             $quotient += 1000000;
         } else if ($dividend >= $divisor * 1000) {
-            $dividend -= $divisor * 1000;    
+            $dividend -= $divisor * 1000;
             $quotient += 1000;
         } else {
             $dividend -= $divisor;
@@ -597,7 +598,7 @@ function divide($dividend, $divisor)
 
 /**
  * 30. Substring with Concatenation of All Words
- * 
+ *
  * @param String $s
  * @param String[] $words
  * @return Integer[]
@@ -615,7 +616,7 @@ function findSubstring($s, $words)
             $j = $i;
             $key = array_search(substr($s, $j, $wordlength), $local);
             while ($key !== false) {
-                unset ($local[$key]);
+                unset($local[$key]);
                 $j = $j + $wordlength;
                 $key = array_search(substr($s, $j, $wordlength), $local);
             }
@@ -629,3 +630,36 @@ function findSubstring($s, $words)
 
     return $output;
 }
+
+/**
+ * 31. Next Permutation
+ *
+ * @param Integer[] $nums
+ * @return NULL
+ */
+function nextPermutation(&$nums)
+{
+    $ordered = $nums;
+    sort($ordered);
+    for ($i = count($nums) - 1; $i >= 0; $i--) {
+        for ($j = $i - 1; $j >= 0; $j--) {
+            if ($nums[$i] > $nums[$j]) {
+                $replace = $nums[$i];
+                $nums[$i] = $nums[$j];
+                $nums[$j] = $replace;
+                $chunk1 = array_slice($nums, 0, $j + 1);
+                $chunk2 = array_slice($nums, $j + 1);
+                sort($chunk2);
+                $nums = array_merge($chunk1, $chunk2);
+                return true;
+            }
+        }
+    }
+
+    $nums = $ordered;
+    return true;
+}
+
+$nums = [1,1,5];
+nextPermutation($nums);
+var_dump($nums);
